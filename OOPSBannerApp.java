@@ -1,78 +1,65 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class OOPSBannerApp {
 
-    public static class CharacterPatternMap {
+    static Map<Character, String[]> characterPatternMap = new HashMap<>();
 
-        private char character;
-        private String[] pattern;
+    public static void initializePatterns() {
 
-        public CharacterPatternMap(char character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
+        characterPatternMap.put('O', new String[]{
+                " ***** ",
+                "*     *",
+                "*     *",
+                "*     *",
+                "*     *",
+                "*     *",
+                " ***** "
+        });
 
-        public char getCharacter() {
-            return character;
-        }
+        characterPatternMap.put('P', new String[]{
+                " ***** ",
+                "*     *",
+                "*     *",
+                " ***** ",
+                "*      ",
+                "*      ",
+                "*      "
+        });
 
-        public String[] getPattern() {
-            return pattern;
-        }
+        characterPatternMap.put('S', new String[]{
+                " ***** ",
+                "*      ",
+                "*      ",
+                " ***** ",
+                "      *",
+                "      *",
+                " ***** "
+        });
     }
 
-    public static String[] createOPattern() {
-        return new String[]{
-                "  *****  ",
-                " *     * ",
-                "*       *",
-                "*       *",
-                "*       *",
-                " *     * ",
-                "  *****  "
-        };
-    }
+    public static void displayBanner(String word) {
 
-    public static String[] createPPattern() {
-        return new String[]{
-                "  ****** ",
-                " *     * ",
-                "*       *",
-                " ******  ",
-                "*        ",
-                "*        ",
-                "*        "
-        };
-    }
+        for (int i = 0; i < 7; i++) {
 
-    public static String[] createSPattern() {
-        return new String[]{
-                "  ****** ",
-                " *       ",
-                "*        ",
-                "  *****  ",
-                "       * ",
-                " *     * ",
-                "  *****  "
-        };
+            StringBuilder line = new StringBuilder();
+
+            for (char ch : word.toCharArray()) {
+
+                String[] pattern = characterPatternMap.get(ch);
+
+                if (pattern != null) {
+                    line.append(pattern[i]).append("   ");
+                }
+            }
+
+            System.out.println(line);
+        }
     }
 
     public static void main(String[] args) {
 
-        CharacterPatternMap[] letters = {
-                new CharacterPatternMap('O', createOPattern()),
-                new CharacterPatternMap('O', createOPattern()),
-                new CharacterPatternMap('P', createPPattern()),
-                new CharacterPatternMap('S', createSPattern())
-        };
-
-        for (int row = 0; row < 7; row++) {
-
-            StringBuilder lineBuilder = new StringBuilder();
-
-            for (CharacterPatternMap letter : letters) {
-                lineBuilder.append(letter.getPattern()[row]).append(" ");
-            }
-
-            System.out.println(lineBuilder.toString());
-        }
+        initializePatterns();
+        displayBanner("OOPS");
     }
 }
